@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "irb"
+require_relative "../application"
+
+run do
+  IRB.start
+end
