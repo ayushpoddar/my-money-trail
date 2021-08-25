@@ -32,7 +32,7 @@ namespace :db do
   task reset: [:drop, :create, :migrate]
 
   desc "Create a db/schema.rb file"
-  task :schema do
+  task :schema => :migrate do
     ActiveRecord::Base.establish_connection(db_config)
     require "active_record/schema_dumper"
     filename = "db/schema.rb"
