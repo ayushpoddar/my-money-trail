@@ -36,5 +36,17 @@ module MyMoneyTrail
   end
 
 
+  def with_filter(command)
+    io = IO.popen(command, 'r+')
+    begin
+      stdout, $stdout = $stdout, io
+      yield rescue nil
+    ensure
+      $stdout = stdout
+    end
+    io.close_write
+    io.readlines.map(&:chomp)
+  end
+
   module_function :run, :reload!
 end
