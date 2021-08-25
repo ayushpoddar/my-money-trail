@@ -3,6 +3,10 @@
 require "irb"
 require_relative "../application"
 
-run do
+def reload!
+  MyMoneyTrail.reload!
+end
+
+MyMoneyTrail.run do
   IRB.start
 end
