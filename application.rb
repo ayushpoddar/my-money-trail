@@ -4,9 +4,11 @@ require "bundler/setup" # Set up gems listed in the Gemfile.
 
 module MyMoneyTrail
   require "zeitwerk"
+  require_relative "lib/commands"
 
   @loader = Zeitwerk::Loader.new
   @loader.push_dir "#{__dir__}/lib/models"
+  @loader.push_dir "#{__dir__}/lib/commands", namespace: Commands
   @loader.enable_reloading
   @loader.setup
 
