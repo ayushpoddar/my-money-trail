@@ -16,3 +16,6 @@ gem 'zeitwerk', '~> 2.1', '>= 2.1.8'
 
 # Code linter
 gem 'rubocop', '~> 1.19', '>= 1.19.1'
+
+# Colourful printing in console
+gem 'pastel', '~> 0.8.0'
