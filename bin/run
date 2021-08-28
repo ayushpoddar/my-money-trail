@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require_relative "../application"
+require_relative "../lib/commands"
+
+MyMoneyTrail.run do
+ Commands.get_command 
+end
