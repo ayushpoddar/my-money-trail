@@ -19,3 +19,6 @@ gem 'rubocop', '~> 1.19', '>= 1.19.1'
 
 # Colourful printing in console
 gem 'pastel', '~> 0.8.0'
+
+# Debugging
+gem 'byebug', '~> 11.1', '>= 11.1.3'
