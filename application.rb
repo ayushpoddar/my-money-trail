@@ -7,12 +7,10 @@ module MyMoneyTrail # rubocop:disable Style/Documentation
   require 'zeitwerk'
   require 'active_record'
   require 'yaml'
-  require_relative 'lib/commands'
   require_relative "lib/helpers/hash"
 
   @loader = Zeitwerk::Loader.new
   @loader.push_dir "#{__dir__}/lib/models"
-  @loader.push_dir "#{__dir__}/lib/commands", namespace: Commands
   @loader.enable_reloading
   @loader.setup
 
@@ -33,7 +31,6 @@ module MyMoneyTrail # rubocop:disable Style/Documentation
     yield
 
     ActiveRecord::Base.remove_connection
-    logger.info('Bye')
     logger.close
   end
 end
