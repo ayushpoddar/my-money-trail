@@ -1,17 +1,48 @@
 # frozen_string_literal: true
 
+require_relative "helpers/input"
+require_relative "helpers/printer"
+
+require_relative "commands/accounts"
+
 module Commands
-  def return_success(object)
-    OpenStruct.new(success?: true, object.class.name.downcase => object)
+  include Input
+  include Printer
+
+  COMMAND_SECTORS = {
+    "accounts" => Commands::Accounts
+  }.with_indifferent_access
+
+  EXTRA_COMMANDS = %w[exit]
+
+  extend self
+
+  def get_command
+    print_info("Welcome! Please select a command. Choose \"exit\" to exit.")
+    cmd = select_option(commands).first
+    case cmd
+    when "exit"
+      print_success("Bye!")
+    when nil
+      print_error("Nothing selected. Try again!")
+    else
+      call_sector_command(cmd)
+    end
   end
 
-  def return_error(object, error_messages: [])
-    error_messages = object.errors.full_messages if error_messages.blank?
+  private
 
-    OpenStruct.new(
-      success?: false,
-      object.class.name.downcase => object,
-      errors: error_messages
-    )
+  def call_sector_command(cmd)
+    sector, sub_command = cmd.split(".")
+    command_module = COMMAND_SECTORS[sector]
+    command_module::COMMANDS[sub_command].call
+  end
+
+  def commands
+    cmds = COMMAND_SECTORS.map do |sector, modyule|  # intentional typo for module
+      sector_commands = modyule::COMMANDS
+      sector_commands.keys.map { |cmd| "#{sector}.#{cmd}" }
+    end
+    cmds.flatten + EXTRA_COMMANDS
   end
 end
