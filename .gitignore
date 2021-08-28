@@ -1,1 +1,4 @@
 db/money-trail.db
+
+.byebug_history
+playground.rb
