@@ -22,3 +22,6 @@ gem 'pastel', '~> 0.8.0'
 
 # Debugging
 gem 'byebug', '~> 11.1', '>= 11.1.3'
+
+# User input
+gem 'tty-prompt', '~> 0.23.1'
