@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require_relative "../helpers/input"
+
 module Commands
   module Accounts
+    include Input
+
     COMMANDS = {
       "add" => -> { add }
     }
@@ -9,7 +13,10 @@ module Commands
     extend self
 
     def add
-      puts "I am in add"
+      data = collect_info do
+        input :name, required: true
+        input :initial_balance, required: true
+      end
     end
   end
 end
