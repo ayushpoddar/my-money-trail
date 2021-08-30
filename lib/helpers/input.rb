@@ -1,4 +1,5 @@
 require_relative "printer"
+require_relative "form_builder"
 
 module Input
   include Printer
@@ -11,6 +12,11 @@ module Input
     with_fzf_filter(multiple: multiple) do
       puts possibilities
     end
+  end
+
+  def collect_info(&block)
+    form = FormBuilder.new
+    form.collect(&block)
   end
   
   private
