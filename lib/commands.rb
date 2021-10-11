@@ -18,13 +18,13 @@ module Commands
   extend self
 
   def get_command
-    print_info("Welcome! Please select a command. Choose \"exit\" to exit.")
-    cmd = select_option(commands).first
+    info_text = "Please select a command. Choose \"exit\" to exit."
+    cmd = select_option(info_text, commands).first
     case cmd
     when "exit"
       print_success("Bye!")
     when nil
-      print_error("Nothing selected. Try again!")
+      print_success("Bye!")
     else
       call_sector_command(cmd)
     end

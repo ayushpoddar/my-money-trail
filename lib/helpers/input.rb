@@ -8,14 +8,19 @@ module Input
   # @param possibilities [Array<String>]
   # @param multiple [Boolean] if you want multiple selections possible
   # @return [Array<String>]
-  def select_option(possibilities, multiple: false)
+  def select_option(info_text, possibilities, multiple: false)
+    print_info info_text
     with_fzf_filter(multiple: multiple) do
       puts possibilities
     end
   end
 
-  def collect_info(&block)
-    form = FormBuilder.new
+  # Collects information from the user
+  # @param [Hash] values - All the initial values for the form fields
+  # Example values: { name: "Kotak Bank", initial_balance: 50 }
+  # @param &block - Block to be executed by the form builder
+  def collect_info(values={}, &block)
+    form = FormBuilder.new(values)
     form.collect(&block)
   end
   

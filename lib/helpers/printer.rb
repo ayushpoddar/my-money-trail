@@ -14,4 +14,8 @@ module Printer
   def print_success(text)
     puts @@pastel.green(text)
   end
+
+  def print_warning(text)
+    puts @@pastel.yellow(text)
+  end
 end

@@ -4,13 +4,34 @@ require 'tty-prompt'
 require 'active_support'
 
 class FormBuilder
+  # Creates an instance
+  # @param [Hash] values - All the initial values for the form fields
+  # Example values: { name: "Kotak Bank", initial_balance: 50 }
+  def initialize(values)
+    @values = values
+  end
+
   def collect(&block)
     prompt.collect(&block)
   end
 
-  def input(name, required: false, label: nil)
-    question = label || "Please enter the #{name.to_s.humanize}"
-    key(name).ask(question, required: required)
+  # Get input from user
+  # @param [String] name - Name of the field
+  # @param [Hash] options - Options to be used
+  # Supported options:
+  # - label: Text to be printed to get the input
+  # - modify: Modifications to be performed in the user input. Defaults to :strip, :collapse
+  # - All the other options supported by `ask method` of tty-prompt
+  def input(name, options)
+    question = (options[:label] || "Please enter the #{name.to_s.humanize}") + ":"
+
+    input_modify_opts = options.fetch(:modify, [:strip, :collapse])
+
+    options = options.except(:label, :modify)
+    options[:value] ||= @values[name.to_sym].to_s
+    key(name).ask(question, **options) do |q|
+      q.modify *input_modify_opts
+    end
   end
 
   private

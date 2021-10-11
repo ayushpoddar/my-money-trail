@@ -6,7 +6,7 @@ class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
   def return_success
-    OpenStruct.new(success?: true, self.class.name.downcase => self)
+    OpenStruct.new(success?: true, object: self)
   end
 
   def return_error(error_messages: [])
@@ -14,7 +14,7 @@ class ApplicationRecord < ActiveRecord::Base
 
     OpenStruct.new(
       success?: false,
-      self.class.name.downcase => object,
+      object: self,
       errors: error_messages
     )
   end
