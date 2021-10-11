@@ -10,12 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_25_232649) do
+ActiveRecord::Schema.define(version: 2021_10_11_194348) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "name", null: false
     t.float "initial_balance", default: 0.0
     t.boolean "is_deleted", default: false, null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "details", null: false
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.datetime "created_at", null: false
   end
 
 end
