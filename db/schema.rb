@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_11_194348) do
+ActiveRecord::Schema.define(version: 2021_10_28_080437) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "name", null: false
@@ -25,4 +25,14 @@ ActiveRecord::Schema.define(version: 2021_10_11_194348) do
     t.datetime "created_at", null: false
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.integer "event_id"
+    t.string "summary"
+    t.datetime "performed_at", null: false
+    t.float "amount", default: 0.0, null: false
+    t.string "direction"
+    t.index ["event_id"], name: "index_transactions_on_event_id"
+  end
+
+  add_foreign_key "transactions", "events"
 end
