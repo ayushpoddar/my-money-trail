@@ -11,15 +11,21 @@ class Transaction < ApplicationRecord
   # in: Money coming in; I am earning
   # out: Money going out; I am expending
   # transfer: Money being transferred from one account to other
-  IN_DIRECTION = "in"
-  OUT_DIRECTION = "out"
-  TRANSFER_DIRECTION = "transfer"
-  DIRECTIONS = [IN_DIRECTION OUT_DIRECTION TRANSFER_DIRECTION].freeze
+  module Direction
+    EXPENSE = "expense"
+    INCOME = "income"
+    TRANSFER = "transfer"
+  end
+
+  enum direction: Direction.constants.map { |c|
+    value = Direction.const_get(c)
+    [value, value]
+  }.to_h
 
   # Validations
   #############
   validates :amount, presence: true, numericality: { greater_than: 0 }
-  validates :direction, presence: true, inclusion: { in: DIRECTIONS }
+  validates :direction, presence: true
   validates :performed_at, presence: true
 
   # Associations
@@ -28,23 +34,8 @@ class Transaction < ApplicationRecord
 
   # Scopes
   ########
-  scope :transfer, -> { where(direction: TRANSFER_DIRECTION) }
-  scope :not_transfer, -> { where.not(direction: TRANSFER_DIRECTION) }
-  scope :expense, -> { where(direction: OUT_DIRECTION) }
-  scope :income, -> { where(direction: IN_DIRECTION) }
 
   # Instance Methods
   ##################
   #
-  def expense?
-    direction == OUT_DIRECTION
-  end
-
-  def income?
-    direction == IN_DIRECTION
-  end
-
-  def transfer?
-    direction == TRANSFER_DIRECTION
-  end
 end
