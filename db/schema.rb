@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_28_080437) do
+ActiveRecord::Schema.define(version: 2021_10_29_075825) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "name", null: false
@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(version: 2021_10_28_080437) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.string "details", null: false
     t.datetime "started_at"
     t.datetime "finished_at"
     t.datetime "created_at", null: false
+    t.string "summary"
   end
 
   create_table "transactions", force: :cascade do |t|

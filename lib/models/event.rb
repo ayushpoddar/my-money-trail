@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
+# t.datetime "started_at"
+# t.datetime "finished_at"
+# t.datetime "created_at", null: false
+# t.string "summary"
+
 class Event < ApplicationRecord
 
   # Validations
   #############
-  validates :details, presence: true
 
   # Associations
   ##############
