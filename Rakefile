@@ -59,6 +59,8 @@ namespace :g do
 
     File.open(path, "w") do |file|
       file.write <<~EOF
+        # frozen_string_literal: true
+
         class #{migration_class} < ActiveRecord::Migration[6.0]
           def change
           end
