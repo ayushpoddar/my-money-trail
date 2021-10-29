@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# t.string "name", null: false
+# t.float "initial_balance", default: 0.0
+# t.boolean "is_deleted", default: false, null: false
+
 class Account < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
