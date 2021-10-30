@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_29_075825) do
+ActiveRecord::Schema.define(version: 2021_10_30_092155) do
+
+  create_table "account_transactions", force: :cascade do |t|
+    t.string "summary"
+    t.datetime "performed_at"
+    t.string "status"
+    t.string "transaction_id"
+    t.float "amount"
+    t.string "direction"
+    t.integer "account_id"
+    t.index ["account_id"], name: "index_account_transactions_on_account_id"
+  end
 
   create_table "accounts", force: :cascade do |t|
     t.string "name", null: false
@@ -31,8 +42,12 @@ ActiveRecord::Schema.define(version: 2021_10_29_075825) do
     t.datetime "performed_at", null: false
     t.float "amount", default: 0.0, null: false
     t.string "direction"
+    t.integer "account_transaction_id", null: false
+    t.index ["account_transaction_id"], name: "index_transactions_on_account_transaction_id"
     t.index ["event_id"], name: "index_transactions_on_event_id"
   end
 
+  add_foreign_key "account_transactions", "accounts"
+  add_foreign_key "transactions", "account_transactions"
   add_foreign_key "transactions", "events"
 end

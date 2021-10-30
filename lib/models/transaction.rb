@@ -5,6 +5,7 @@
 # t.datetime "performed_at", null: false
 # t.float "amount", default: 0.0, null: false
 # t.string "direction"
+# t.integer "account_transaction_id", null: false
 
 require_relative "helpers/enumable"
 
@@ -37,6 +38,7 @@ class Transaction < ApplicationRecord
   # Associations
   ##############
   belongs_to :event, inverse_of: :transactions, optional: true
+  belongs_to :account_transaction, inverse_of: :transactions
 
   # Scopes
   ########
