@@ -6,21 +6,27 @@
 # t.float "amount", default: 0.0, null: false
 # t.string "direction"
 
+require_relative "helpers/enumable"
+
 class Transaction < ApplicationRecord
   # The meaning of each direction are:
   # in: Money coming in; I am earning
   # out: Money going out; I am expending
   # transfer: Money being transferred from one account to other
   module Direction
-    EXPENSE = "expense"
-    INCOME = "income"
+    EXPENSE  = "expense"
+    INCOME   = "income"
     TRANSFER = "transfer"
   end
 
-  enum direction: Direction.constants.map { |c|
-    value = Direction.const_get(c)
-    [value, value]
-  }.to_h
+  extend Enumable
+
+  # enum direction: Direction.constants.map { |c|
+  #   value = Direction.const_get(c)
+  #   [value, value]
+  # }.to_h
+  #
+  enumify :direction, Direction
 
   # Validations
   #############
