@@ -37,7 +37,7 @@ class Transaction < ApplicationRecord
 
   # Associations
   ##############
-  belongs_to :event, inverse_of: :transactions, optional: true
+  belongs_to :event, inverse_of: :transactions
   belongs_to :account_transaction, inverse_of: :transactions
 
   # Scopes
