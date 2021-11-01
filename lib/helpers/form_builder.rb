@@ -17,12 +17,13 @@ class FormBuilder
   end
 
   # Get input from user
-  # @param [String] name - Name of the field
+  # @param [String/Symbol] name - Name of the field
   # @param [Hash] options - Options to be used
   # Supported options:
-  # - label: Text to be printed to get the input
+  # - label: Text to be printed to get the input [optional]
   # - modify: Modifications to be performed in the user input. Defaults to :strip, :collapse
   # - All the other options supported by `ask method` of tty-prompt
+  # - - Look up `tty_options` method for a list of supported options
   def input(name, options)
     question = (options[:label] || "Please enter the #{name.to_s.humanize}") + ":"
 
