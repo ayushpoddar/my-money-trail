@@ -4,6 +4,8 @@ require 'tty-prompt'
 require 'active_support'
 
 class FormBuilder
+  class NoChoiceError < StandardError; end;
+
   # Creates an instance
   # @param [Hash] values - All the initial values for the form fields
   # Example values: { name: "Kotak Bank", initial_balance: 50 }
@@ -34,6 +36,25 @@ class FormBuilder
     @values[name] = prompt.ask(question, **options) do |q|
       q.modify *input_modify_opts
     end
+  end
+
+  # Get choice from user
+  # @param [String/Symbol] name - Name of the field
+  # @param [Hash] options - Options to be used
+  # Supported options:
+  # - label: Text to be printed to get the input [optional]
+  # - choices: Array of hash. Each hash should have the form { name: , value: } [Mandatory]
+  # - All the other options supported by `select` method of tty-prompt
+  # - - Look up `tty_options` method for a list of supported options
+  def choice(name, options)
+    question = (options[:label] || "Please select the #{name.to_s.humanize}")
+
+    choices = options[:choices]
+    raise NoChoiceError, "No choices given" unless choices.is_a?(Array) && choices.length > 0
+
+    options = tty_options(name, options)
+
+    @values[name] = prompt.select(question, choices, **options)
   end
 
   private
