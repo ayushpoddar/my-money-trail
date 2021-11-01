@@ -9,8 +9,8 @@ module Commands
     include ResultHandler
 
     COMMANDS = {
-      "add" => -> { add }
-    }
+      add: -> { add }
+    }.with_indifferent_access
 
     extend self
 

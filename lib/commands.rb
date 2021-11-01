@@ -4,13 +4,15 @@ require_relative "helpers/input"
 require_relative "helpers/printer"
 
 require_relative "commands/accounts"
+require_relative "commands/transactions"
 
 module Commands
   include Input
   include Printer
 
   COMMAND_SECTORS = {
-    "accounts" => Commands::Accounts
+    accounts:     Commands::Accounts,
+    transactions: Commands::Transactions
   }.with_indifferent_access
 
   EXTRA_COMMANDS = %w[exit]
