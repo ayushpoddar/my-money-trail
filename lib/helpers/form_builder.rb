@@ -7,12 +7,13 @@ class FormBuilder
   # Creates an instance
   # @param [Hash] values - All the initial values for the form fields
   # Example values: { name: "Kotak Bank", initial_balance: 50 }
-  def initialize(values)
-    @values = values
+  def initialize(values={})
+    @values = values.with_indifferent_access
   end
 
   def collect(&block)
-    prompt.collect(&block)
+    instance_eval(&block)
+    @values
   end
 
   # Get input from user
@@ -27,9 +28,9 @@ class FormBuilder
 
     input_modify_opts = options.fetch(:modify, [:strip, :collapse])
 
-    options = options.except(:label, :modify)
-    options[:value] ||= @values[name.to_sym].to_s
-    key(name).ask(question, **options) do |q|
+    options = tty_options(name, options)
+
+    @values[name] = prompt.ask(question, **options) do |q|
       q.modify *input_modify_opts
     end
   end
@@ -37,39 +38,15 @@ class FormBuilder
   private
 
   def prompt
-    @form_prompt ||= begin
-      prompt = TTY::Prompt.new
-
-      class << prompt
-        attr_accessor :form_builder
-
-        def answers_collector
-          @answers_collector ||= begin
-            collector = TTY::Prompt::AnswersCollector.new(self)
-            class << collector
-              def input(...)
-                @prompt.form_builder.input(...)
-              end
-            end
-            collector
-          end
-        end
-
-        def collect(&block)
-          answers_collector.call(&block)
-        end
-      end
-
-      prompt.form_builder = self
-      prompt
-    end
+    @prompt ||= TTY::Prompt.new
   end
 
-  def key(*args)
-    prompt_collector.key(*args)
-  end
+  def tty_options(name, options)
+    options = options.slice(:convert, :default, :required, :value)
 
-  def prompt_collector
-    prompt.answers_collector
+    return options if options.has_key?(:value)
+    return options if @values[name].nil?
+
+    return options.merge(value: @values[name])
   end
 end
