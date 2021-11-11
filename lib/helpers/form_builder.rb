@@ -71,7 +71,8 @@ class FormBuilder
     return options if options.has_key?(:value)
     return options if @values[name].nil?
 
-    return options.merge(value: @values[name])
+    return options.merge(value: @values[name].to_s)
+  end
 
   def _block_self_
     return nil if @block_binding.nil?
