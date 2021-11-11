@@ -54,7 +54,7 @@ class FormBuilder
     raise NoChoiceError, "Choices is not a list" unless choices.is_a? Array
     raise NoChoiceError, "No choices provided" unless choices.length > 0
 
-    options = tty_options(name, options)
+    options = tty_options(name, options).merge(cycle: true, filter: true)
 
     @values[name] = prompt.select(question, choices, **options)
   end
