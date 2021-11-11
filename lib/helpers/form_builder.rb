@@ -14,6 +14,7 @@ class FormBuilder
   end
 
   def collect(&block)
+    @block_binding = block.binding
     instance_eval(&block)
     @values
   end
@@ -70,5 +71,22 @@ class FormBuilder
     return options if @values[name].nil?
 
     return options.merge(value: @values[name])
+
+  def _block_self_
+    return nil if @block_binding.nil?
+    @_block_self_ ||= @block_binding.eval("self")
+  end
+
+  def method_missing(meth, *args, &blk)
+    return super if _block_self_.nil?
+    return super unless _block_self_.respond_to?(meth, true)
+    
+    _block_self_.send meth, *args, &blk
+  end
+
+  def respond_to_missing?(meth, include_all)
+    return super if _block_self_.nil?
+
+    super || _block_self_.respond_to?(meth, true)
   end
 end
