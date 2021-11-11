@@ -9,6 +9,7 @@ module MyMoneyTrail # rubocop:disable Style/Documentation
   require 'yaml'
   require 'byebug'
   require_relative "lib/helpers/hash"
+  require_relative "lib/helpers/array"
 
   @loader = Zeitwerk::Loader.new
   @loader.push_dir "#{__dir__}/lib/models"

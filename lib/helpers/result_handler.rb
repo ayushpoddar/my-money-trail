@@ -15,7 +15,7 @@ module ResultHandler
   end
 
   def handle_failure(errors, &block)
-    print_model_errors(errors)
+    print_errors errors
     sleep ARTIFICIAL_DELAY
 
     run_callback &block
@@ -40,9 +40,9 @@ module ResultHandler
     end
   end
 
-  def print_model_errors(errors)
+  def print_errors(errors)
     print_error("Please fix the following errors:")
-    errors.each do |error|
+    Array.wrap(errors).each do |error|
       print_warning("- " + error)
     end
     puts ""
