@@ -1,4 +1,5 @@
 require "pastel"
+require "awesome_print"
 
 module Printer
   @@pastel = Pastel.new
@@ -17,5 +18,9 @@ module Printer
 
   def print_warning(text)
     puts @@pastel.yellow(text)
+  end
+
+  def pretty_print(obj)
+    ap obj, index: false, object_id: false
   end
 end
