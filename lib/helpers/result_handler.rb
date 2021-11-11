@@ -21,10 +21,11 @@ module ResultHandler
     run_callback &block
   end
 
-  def handle_success(object, &block)
-    text = object.class.to_s + " saved! Here are the details:"
-    print_success(text)
-    pp object
+  def handle_success(msg, object, &block)
+    print_success(msg)
+    print_info("Saved details are:")
+    pretty_print object
+    puts "=" * 80
     sleep ARTIFICIAL_DELAY
 
     run_callback &block
