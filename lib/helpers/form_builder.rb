@@ -51,7 +51,8 @@ class FormBuilder
     question = (options[:label] || "Please select the #{name.to_s.humanize}")
 
     choices = options[:choices]
-    raise NoChoiceError, "No choices given" unless choices.is_a?(Array) && choices.length > 0
+    raise NoChoiceError, "Choices is not a list" unless choices.is_a? Array
+    raise NoChoiceError, "No choices provided" unless choices.length > 0
 
     options = tty_options(name, options)
 
