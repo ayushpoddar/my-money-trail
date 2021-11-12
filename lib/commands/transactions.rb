@@ -25,14 +25,9 @@ module Commands
         .on_success do |result, collected_data|
           handle_success("Expense added", collected_data[:expense].humanize)
         end
-        .on(Errors::ValidationError) do |error, collected_data|
+        .on_failure do |error, collected_data|
           handle_failure(error.message) do
             quick_add(collected_data[:expense])
-          end
-        end
-        .on(Errors::CollectionError) do |error|
-          handle_failure(error.message) do
-            quick_add
           end
         end
     end
