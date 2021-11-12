@@ -54,6 +54,7 @@ class FormBuilder
     raise NoChoiceError, "Choices is not a list" unless choices.is_a? Array
     raise NoChoiceError, "No choices provided" unless choices.length > 0
 
+    options[:default] ||= default_choice(choices)
     options = tty_options(name, options).merge(cycle: true, filter: true)
 
     @values[name] = prompt.select(question, choices, **options)
@@ -63,6 +64,11 @@ class FormBuilder
 
   def prompt
     @prompt ||= TTY::Prompt.new
+  end
+
+  def default_choice(choices)
+    choice = choices.find { |c| c[:default] == true }
+    choice&.fetch(:name)
   end
 
   def tty_options(name, options)

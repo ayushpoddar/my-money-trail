@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "../../../base_frontend"
 
 module Composites
@@ -5,6 +7,7 @@ module Composites
     module QuickAdd
       module Frontend
         class CollectExpenseData < BaseFrontend
+          DEFAULT_ACC_NAME = "cash"
 
           humanize :values
 
@@ -31,7 +34,7 @@ module Composites
           def account_choices
             @account_choices ||= Account.all.map do |a|
               opts = { name: a.name, value: a.id }
-              opts[:default] = (a.name.downcase == "cash")
+              opts[:default] = (a.name.downcase == DEFAULT_ACC_NAME)
               opts
             end
           end
