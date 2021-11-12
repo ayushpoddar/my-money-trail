@@ -51,7 +51,7 @@ module Result
       !ok?
     end
 
-    def save_value_as(key, default=nil)
+    def save_value_as(key, default={})
       @collected_data[key] = default
       self
     end
@@ -89,7 +89,7 @@ module Result
       result
     end
 
-    def save_value_as(key, default=nil)
+    def save_value_as(key, _default=nil)
       @collected_data[key] = value
       self
     end
