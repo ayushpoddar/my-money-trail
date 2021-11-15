@@ -30,6 +30,10 @@ module Commands
     else
       call_sector_command(cmd)
     end
+
+    # Gracefully exit the program when interrupted
+    rescue Interrupt => e
+      print_success "\nBye!"
   end
 
   private
