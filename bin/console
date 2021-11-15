@@ -1,12 +1,16 @@
 #!/usr/bin/env ruby
 
 require "irb"
+require_relative "../lib/cli_parser"
+
 require_relative "../application"
 
 def reload!
   MyMoneyTrail.reload!
 end
 
-MyMoneyTrail.run do
+options = CliParser.call
+
+MyMoneyTrail.run(options) do
   IRB.start
 end

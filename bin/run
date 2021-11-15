@@ -1,8 +1,12 @@
 #!/usr/bin/env ruby
 
 require_relative "../application"
+
+require_relative "../lib/cli_parser"
 require_relative "../lib/commands"
 
-MyMoneyTrail.run do
- Commands.get_command 
+options = CliParser.call
+
+MyMoneyTrail.run(options) do
+ Commands.get_command
 end

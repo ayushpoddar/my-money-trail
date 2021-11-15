@@ -8,6 +8,7 @@ module MyMoneyTrail # rubocop:disable Style/Documentation
   require 'active_record'
   require 'yaml'
   require 'byebug'
+  require_relative "lib/setup"
   require_relative "lib/relog"
   require_relative "lib/helpers/hash"
   require_relative "lib/helpers/array"
@@ -23,7 +24,9 @@ module MyMoneyTrail # rubocop:disable Style/Documentation
     @loader.reload
   end
 
-  def run
+  def run(options={})
+    Setup.env = options[:env]
+
     Relog.with_logging do |logger|
       db_config = YAML.load_file('config/database.yml')
       ActiveRecord::Base.establish_connection(db_config)
