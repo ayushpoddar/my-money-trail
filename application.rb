@@ -8,6 +8,7 @@ module MyMoneyTrail # rubocop:disable Style/Documentation
   require 'active_record'
   require 'yaml'
   require 'byebug'
+  require_relative "lib/relog"
   require_relative "lib/helpers/hash"
   require_relative "lib/helpers/array"
 
@@ -23,16 +24,14 @@ module MyMoneyTrail # rubocop:disable Style/Documentation
   end
 
   def run
-    logger = Logger.new($stdout)
-    # logger.level = Logger::WARN
+    Relog.with_logging do |logger|
+      db_config = YAML.load_file('config/database.yml')
+      ActiveRecord::Base.establish_connection(db_config)
+      ActiveRecord::Base.logger = logger
 
-    db_config = YAML.load_file('config/database.yml')
-    ActiveRecord::Base.establish_connection(db_config)
-    ActiveRecord::Base.logger = logger
+      yield
 
-    yield
-
-    ActiveRecord::Base.remove_connection
-    logger.close
+      ActiveRecord::Base.remove_connection
+    end
   end
 end
