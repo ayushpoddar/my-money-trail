@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../../base_frontend"
+require_relative "../../../helpers/backend/account"
 
 module Composites
   module Transactions
@@ -32,7 +33,7 @@ module Composites
           private
 
           def account_choices
-            @account_choices ||= Account.all.map do |a|
+            @account_choices ||= Helpers::Backend::Account.new.all_to_enum.map do |a|
               opts = { name: a.name, value: a.id }
               opts[:default] = (a.name.downcase == DEFAULT_ACC_NAME)
               opts
