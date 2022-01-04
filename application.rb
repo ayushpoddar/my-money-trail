@@ -28,7 +28,7 @@ module MyMoneyTrail # rubocop:disable Style/Documentation
     Setup.env = options[:env]
 
     Relog.with_logging do |logger|
-      db_config = YAML.load_file('config/database.yml')
+      db_config = Setup.db_config
       ActiveRecord::Base.establish_connection(db_config)
       ActiveRecord::Base.logger = logger
 

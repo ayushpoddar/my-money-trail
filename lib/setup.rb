@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "yaml"
+
 module Setup
   VALID_ENVIRONMENTS = %w(development production).freeze
 
@@ -24,8 +26,16 @@ module Setup
     @env.freeze
   end
 
+  def environments
+    VALID_ENVIRONMENTS
+  end
+
   def env
     @env
   end
-end
 
+  def db_config(environment=nil)
+    environment ||= @env
+    YAML.load_file("config/database.yml").fetch(environment)
+  end
+end

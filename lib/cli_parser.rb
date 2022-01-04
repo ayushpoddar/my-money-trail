@@ -9,7 +9,7 @@ module CliParser
     OptionParser.new do |opts|
       opts.banner = "Usage: bin/run [options]"
 
-      opts.on("-p", "--production", "Run in production mode") do |v|
+      opts.on("-p", "--production", "Run in production mode") do
         options[:env] = "production"
       end
     end.parse!

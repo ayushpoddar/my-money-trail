@@ -1,2 +1,7 @@
-adapter: sqlite3
-database: db/money-trail.db
+development:
+  adapter: sqlite3
+  database: db/money-trail-development.db
+
+production:
+  adapter: sqlite3
+  database: db/money-trail-production.db
