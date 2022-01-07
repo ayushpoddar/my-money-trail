@@ -41,5 +41,5 @@ class AccountTransaction < ApplicationRecord
   # Associations
   ##############
   belongs_to :account, inverse_of: :account_transactions
-  has_many :transactions, inverse_of: :account_transaction
+  has_and_belongs_to_many :transactions, join_table: :transaction_relations
 end
