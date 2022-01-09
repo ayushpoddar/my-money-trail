@@ -59,6 +59,26 @@ class FormBuilder
     @values[name] = prompt.select(question, choices, **options)
   end
 
+  # Get a Yes/No answer from user
+  # @param [String/Symbol] name - Name of the field
+  # @param [Hash] options - Options
+  # Supported options:
+  # - label: Text to be printed to get the input [optional]
+  # - default: [Boolean] Default value [optional]
+  # - Look up `tty_options` method for a list of supported options
+  # - - The `convert` option will be overridden
+  def yes_or_no(name, options)
+    question = options[:label] || "Is this #{name.to_s.humanize}?"
+    choices = [
+      { name: "Yes", value: true, default: options[:default] == true },
+      { name: "No" , value: false, default: options[:default] == false }
+    ]
+    options = options.except(:default)
+    options = tty_options(name, options).merge(choices: choices, label: question, convert: :boolean)
+
+    choice(name, options)
+  end
+
   private
 
   def prompt
