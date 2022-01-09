@@ -4,6 +4,7 @@
 # t.float "initial_balance", default: 0.0
 # t.boolean "is_deleted", default: false, null: false
 # t.boolean "is_external", default: true
+# t.string "description"
 
 class Account < ApplicationRecord
 

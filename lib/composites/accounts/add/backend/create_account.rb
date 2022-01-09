@@ -24,7 +24,7 @@ module Composites
           private
 
           def account_params
-            @params.slice(:name, :initial_balance, :is_external)
+            @params.slice(:name, :initial_balance, :is_external, :description)
           end
         end
       end
