@@ -16,7 +16,8 @@ module Composites
           def call
             @values = collect_info(@values) do
               input :name, required: true, label: "Please enter the account name"
-              input :initial_balance, required: true, convert: :float, label: "Please enter this account's initial balance"
+              input :initial_balance, required: true, convert: :float, default: 0, label: "Please enter this account's initial balance"
+              yes_or_no :is_external, required: true, default: false, label: "Is this an external account?"
             end
             values
           rescue StandardError => e
@@ -28,7 +29,8 @@ module Composites
           def humanize
             {
               :name            => @values[:name],
-              :initial_balance => @values[:initial_balance]
+              :initial_balance => @values[:initial_balance],
+              "external_account" => @values[:is_external]
             }
           end
         end

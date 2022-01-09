@@ -3,6 +3,7 @@
 # t.string "name", null: false
 # t.float "initial_balance", default: 0.0
 # t.boolean "is_deleted", default: false, null: false
+# t.boolean "is_external", default: true
 
 class Account < ApplicationRecord
 
@@ -14,4 +15,19 @@ class Account < ApplicationRecord
   # Associations
   ##############
   has_many :account_transactions, inverse_of: :account
+
+  # Scopes
+  ########
+  scope :internal, -> { where(is_external: false) }
+  scope :external, -> { where(is_external: true) }
+
+  # Instance methods
+  ##################
+  def external?
+    is_external?
+  end
+
+  def internal?
+    !external?
+  end
 end
