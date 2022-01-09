@@ -3,10 +3,15 @@
 module Composites
   module Helpers
     module Backend
-      class Account
+      module Account
 
-        def all_to_enum
-          ::Account.all.map
+        def self.to_enum(meth)
+          meth = meth.to_s
+
+          unless %w[all internal].include?(meth)
+            raise ArgumentError, "#{meth} is not a supported method name"
+          end
+          ::Account.send(meth).map
         end
 
       end
