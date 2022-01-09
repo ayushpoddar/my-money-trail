@@ -14,17 +14,4 @@ class Account < ApplicationRecord
   # Associations
   ##############
   has_many :account_transactions, inverse_of: :account
-
-  class << self
-
-    def add(params)
-      account = self.new(params)
-      if account.save
-        account.return_success
-      else
-        account.return_error
-      end
-    end
-
-  end
 end
